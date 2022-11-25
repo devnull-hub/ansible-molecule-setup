@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include httpd.webapp"
+      include_role:
+        name: "httpd.webapp"
+      vars:
+         web_content: "New content for testing only"

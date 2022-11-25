@@ -1,0 +1,27 @@
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yaml"
+ 
+- name: Update Package Cache (apt/Ubuntu)
+  apt:
+    update_cache: yes
+  changed_when: false
+  when: ansible_os_family == "Debian"
+ 
+- name: Ensure httpd installed
+  package:
+    name: "{{ httpd_package }}"
+    state: present
+
+- name: Ensure {{httpd_service}} svc is started
+  service:
+    name: "{{ httpd_service }}"
+    state: started
+    enabled: yes
+  when: ansible_os_family == "RedHat"  
+
+- name: Ensure {{httpd_service}} svc is started
+  sysvinit:
+      name: "{{ httpd_service }}"
+      state: started
+      enabled: yes
+  when: ansible_os_family == "Debian"

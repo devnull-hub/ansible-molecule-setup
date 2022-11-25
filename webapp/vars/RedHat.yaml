@@ -1,0 +1,4 @@
+---
+httpd_package: httpd
+httpd_service: httpd
+httpd_group: apache
